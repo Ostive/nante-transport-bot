@@ -40,10 +40,6 @@ OPENCAGE_API_KEY=...
 AI_MODEL=gpt-4o
 ```
 
-**⚠️ Important** : Le fichier `.env` contient des clés sensibles et ne doit jamais être commité dans git.
-
-(Voir [docs/DOCUMENTATION.md](./docs/DOCUMENTATION.md) pour obtenir les clés).
-
 ### 3. Lancer
 
 ```bash
