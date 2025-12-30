@@ -19,7 +19,7 @@ Une application Next.js 16 infusée à l'IA permettant de trouver les arrêts de
 ### 1. Installation
 
 ```bash
-git clone [URL_REPO]
+git clone [https://github.com/Ostive/nante-transport-bot.git]
 cd nante-trasport
 npm install
 ```

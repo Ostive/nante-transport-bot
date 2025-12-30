@@ -23,7 +23,7 @@ Technologies utilisées :
 
 ### Installation
 ```bash
-git clone [URL_REPO]
+git clone ["https://github.com/Ostive/nante-transport-bot.git"]
 cd nante-trasport
 npm install
 ```
@@ -227,15 +227,15 @@ if (p.output && !p.output.found) {
 
 ### 7.3. Cas d'Erreurs Gérés
 
-| Cas d'Erreur | Détection | Message Utilisateur | Action Recommandée |
-|--------------|-----------|---------------------|-------------------|
-| **Clé API manquante** | Démarrage service | "Configuration serveur incomplète" | Vérifier `.env` |
-| **API OpenCage down** | HTTP error | "Erreur OpenCage: [statusText]" | Réessayer plus tard |
-| **API TAN down** | HTTP error | "Erreur TAN API: [statusText]" | Réessayer plus tard |
-| **Adresse invalide** | Pas de résultats | "Aucun arrêt trouvé à cette adresse" | Reformuler la requête |
-| **Erreur réseau** | Timeout/Fetch fail | "Erreur technique" | Vérifier connexion |
-| **Parsing JSON** | Exception | "Erreur technique" | Vérifier format API |
-| **AI SDK error** | Exception route | HTTP 500 + message | Vérifier logs serveur |
+| Cas d'Erreur          | Détection           | Message Utilisateur                  | Action Recommandée    |
+|-----------------------|---------------------|--------------------------------------|-----------------------|
+| **Clé API manquante** | Démarrage service   | "Configuration serveur incomplète"   | Vérifier `.env`       |
+| **API OpenCage down** | HTTP error          | "Erreur OpenCage: [statusText]"      | Réessayer plus tard   |
+| **API TAN down**      | HTTP error          | "Erreur TAN API: [statusText]"       | Réessayer plus tard   |
+| **Adresse invalide**  | Pas de résultats    | "Aucun arrêt trouvé à cette adresse" | Reformuler la requête |
+| **Erreur réseau**     | Timeout/Fetch fail  | "Erreur technique"                   | Vérifier connexion    |
+| **Parsing JSON**      | Exception           | "Erreur technique"                   | Vérifier format API   |
+| **AI SDK error**      | Exception route     | HTTP 500 + message                   | Vérifier logs serveur |
 
 ### 7.4. Logging & Debugging
 

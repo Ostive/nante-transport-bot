@@ -31,13 +31,12 @@ export async function findBusStops(address: string): Promise<ToolResult> {
 
     try {
         // 1. Geocoding
-        // Ajout explicite de "Nantes France" pour sécuriser la recherche
+        // Ajout de "Nantes France" afin de sécuriser la recherche
         const query = `${address} Nantes France`;
         const geoUrl = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(query)}&key=${apiKey}&language=fr&limit=1`;
 
         const geoRes = await fetch(geoUrl);
 
-        // Gestion propre des erreurs HTTP
         if (!geoRes.ok) {
             throw new Error(`Erreur OpenCage: ${geoRes.statusText}`);
         }
@@ -49,12 +48,9 @@ export async function findBusStops(address: string): Promise<ToolResult> {
         }
 
         const { lat, lng } = geo.results[0].geometry;
-        const formatted = geo.results[0].formatted; // Adresse formatée propre
+        const formatted = geo.results[0].formatted;
 
         // 2. Bus Stops (TAN API)
-        // Utilisation de l'API temps réel
-        // Note: L'URL est hardcodée sur la preprod comme dans le code original, 
-        // mais idéalement devrait être une variable d'env.
         const tanUrl = `https://openv2-preprod.tan.fr/ewp/arrets.json/${lat}/${lng}`;
 
         const tanRes = await fetch(tanUrl);
@@ -65,7 +61,6 @@ export async function findBusStops(address: string): Promise<ToolResult> {
 
         const tanData = await tanRes.json();
 
-        // Validation basique des données
         const stops: TanStop[] = Array.isArray(tanData) ? tanData.slice(0, 5) : [];
 
         return {
