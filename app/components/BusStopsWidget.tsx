@@ -80,7 +80,6 @@ const StopCard = ({ stop }: { stop: TanStop }) => {
                             <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block z-10 w-max">
                                 <div className="bg-gray-900 text-white text-xs rounded px-2 py-1 shadow-lg relative">
                                     Ligne {line.numLigne}
-                                    {/* Petite flèche du tooltip */}
                                     <div className="w-2 h-2 bg-gray-900 rotate-45 absolute -bottom-1 left-1/2 transform -translate-x-1/2"></div>
                                 </div>
                             </div>
