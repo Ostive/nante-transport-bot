@@ -15,9 +15,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Nantes Transport Assistant 🚌",
   description: "Votre assistant intelligent pour les transports en commun à Nantes (TAN). Trouvez les arrêts et horaires en temps réel.",
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export default function RootLayout({
