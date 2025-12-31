@@ -2,17 +2,15 @@
 
 > **Test Technique** : Assistant Intelligent pour les transports en commun de Nantes.
 
-Une application Next.js 16 infusée à l'IA permettant de trouver les arrêts de bus et tramways à proximité grâce à une conversation naturelle.
+Une application Next.js 16 aidé par l'IA afin de trouver les arrêts de bus et tramways à proximité grâce à une conversation naturelle.
 
 ![Demo](https://via.placeholder.com/800x400.png?text=Nantes+Bus+Assistant+Demo)
 
 ## ✨ Fonctionnalités Clés
 
-*   🗣️ **Chat en Langage Naturel** : Parlez à l'IA ("Bus pour Tour Bretagne").
+*    **Chat en Langage Naturel** : Evrivez à l'IA ("Bus près des salles des machines").
 *   📍 **Géolocalisation Intelligente** : Conversion d'adresses en coordonnées GPS (OpenCage).
 *   ⏱️ **Temps Réel** : Données officielles du réseau TAN / Naolib Nantes.
-*   🎨 **Design Premium** : UI Glassmorphism moderne, respectant la charte graphique officielle Naolib (Couleurs Tram/Bus).
-*   📱 **Mobile First** : Composant "Widget" avec accordéon intelligent pour gérer les arrêts complexes.
 
 ## 🚀 Démarrage Rapide
 
