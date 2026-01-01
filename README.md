@@ -6,13 +6,9 @@ Une application Next.js 16 avec IA permettant de trouver les arrêts de bus et t
 
 ## ✨ Fonctionnalités Clés
 
-*   🗣️ **Chat en Langage Naturel** : Conversation avec l'IA ("Arrêts à Gare Sud")
-*   📍 **Géolocalisation Intelligente** : Conversion automatique d'adresses en coordonnées GPS (OpenCage)
-*   ⏱️ **Temps Réel** : Données officielles du réseau TAN / Naolib Nantes
-*   🎨 **Design Premium** : UI moderne respectant la charte graphique Naolib (couleurs officielles Tram/Bus)
-*   📱 **Mobile First** : Widget responsive avec accordéon intelligent pour les arrêts complexes
-*   🔄 **Streaming AI** : Réponses en temps réel avec AI SDK v6
-*   ✨ **UX Optimisée** : Message de bienvenue, séparateurs visuels, gestion automatique des widgets multiples
+*    **Chat en Langage Naturel** : Evrivez à l'IA ("Bus près des salles des machines").
+*   📍 **Géolocalisation Intelligente** : Conversion d'adresses en coordonnées GPS (OpenCage).
+*   ⏱️ **Temps Réel** : Données officielles du réseau TAN / Naolib Nantes.
 
 ## 🚀 Démarrage Rapide
 
