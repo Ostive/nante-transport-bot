@@ -1,5 +1,5 @@
 import { openai } from "@ai-sdk/openai";
-import { streamText, tool } from "ai";
+import { streamText, tool, convertToModelMessages, UIMessage } from "ai";
 import { z } from "zod";
 import { findBusStops } from "../../lib/tan-service";
 
@@ -10,49 +10,49 @@ export const maxDuration = 30;
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const { messages } = body;
+        const { messages }: { messages: UIMessage[] } = body;
         const model = process.env.AI_MODEL || "gpt-4o";
 
         if (!messages || !Array.isArray(messages)) {
             throw new Error('Messages array is required');
         }
 
-        const sanitizedMessages = messages.map((m: any) => ({
-            ...m,
-            content: m.content || ""
-        }));
-
-        const coreMessages = sanitizedMessages.map((m: any) => ({
-            role: m.role,
-            content: m.content
-        }));
-
         const result = streamText({
             model: openai(model),
-            system: `Vous êtes l'assistant intelligent du réseau de transports TAN (Nantes Métropole).
-Votre objectif est d'aider les utilisateurs à localiser les arrêts de bus et tramway à proximité.
+            system: `Tu es l'assistant intelligent du réseau de transports TAN (Nantes Métropole).
+Ton objectif : aider les utilisateurs à localiser les arrêts de bus et tramway à proximité.
 
-RÈGLES DE COMPORTEMENT :
+Règles de comportement :
 
-1. DÉCLENCHEMENT DE LA RECHERCHE
-   Dès qu'un utilisateur mentionne un lieu ou une adresse, vous DEVEZ appeler l'outil 'getBusStops'. Ne demandez pas de confirmation, lancez la recherche directement.
+1. Salutations
+   - Si l'utilisateur te salue explicitement (bonjour, salut, coucou, ça va), réponds brièvement de manière amicale avant de traiter sa demande
+   - Sinon, passe directement à la recherche sans salutation
 
-2. FORÇAGE DE L'OUTIL
-   Même si l'adresse a déjà été cherchée plus tôt, appelez l'outil À NOUVEAU. L'utilisateur a besoin de voir le widget visuel à chaque demande.
+2. Recherche d'arrêts
+   - Dès qu'un lieu ou une adresse est mentionné, appelle immédiatement l'outil 'getBusStops'
+   - Ne demande jamais de confirmation, lance la recherche directement
+   - Même si l'adresse a déjà été cherchée, rappelle l'outil (l'utilisateur a besoin du widget visuel)
 
-3. SÉQUENCE OBLIGATOIRE (TEXTE AVANT OUTIL)
-   Vous devez IMPÉRATIVEMENT commencer par une phrase de texte (ex: "Je regarde les bus passant au [Adresse]...") AVANT de générer l'appel à l'outil 'getBusStops'. Ne lancez jamais l'outil sans cette introduction textuelle.
+3. Séquence obligatoire
+   Pour chaque recherche, tu dois :
+   a) Écrire une courte phrase d'introduction (ex: "Je cherche les arrêts à Gare Sud...")
+   b) Appeler l'outil getBusStops
+   Ne te contente pas de dire que tu vas chercher - appelle vraiment l'outil !
 
-4. PRÉSENTATION
-   L'interface affiche un widget spécial pour les arrêts. Ne listez pas tous les détails (lignes, horaires) dans votre texte, sauf si nécessaire.
+4. Présentation des résultats
+   - L'interface affiche automatiquement un widget visuel avec tous les détails (arrêts, lignes, distances)
+   - Tu ne dois pas lister les arrêts dans ton texte (pas de liste avec -, *, ou **)
+   - Après l'appel de l'outil, reste silencieux ou dis juste une phrase très courte (ex: "Voilà !")
+   - Le widget se charge de tout afficher
 
-5. CONVERSATION GENERAL
-   Si l'utilisateur dit "Bonjour", "Merci" ou change de sujet, ne répétez pas le contexte des arrêts précédents. Répondez simplement au nouveau message.
-   Si la demande n'est pas claire, demandez des précisions.
+5. Conversation générale
+   - Si l'utilisateur dit "merci" ou change de sujet, réponds simplement sans répéter le contexte précédent
+   - Si la demande n'est pas claire, demande des précisions
 
-6. TON
-   Restez courtois, concis et serviable.`,
-            messages: coreMessages,
+6. Ton
+   - Courtois, concis et serviable
+   - Émojis avec modération pour une touche chaleureuse 😊`,
+            messages: await convertToModelMessages(messages),
             tools: {
                 getBusStops: tool({
                     description: "Trouver les arrêts TAN proches d'une adresse à Nantes.",
@@ -64,12 +64,13 @@ RÈGLES DE COMPORTEMENT :
                     }
                 })
             },
-  
+
         });
 
-        return (result as any).toUIMessageStreamResponse();
-    } catch (e: any) {
-        console.error("API Error:", e);
-        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+        return result.toUIMessageStreamResponse();
+    } catch (error) {
+        console.error("API Error:", error);
+        const errorMessage = error instanceof Error ? error.message : "Une erreur inconnue est survenue";
+        return new Response(JSON.stringify({ error: errorMessage }), { status: 500 });
     }
 }

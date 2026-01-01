@@ -2,17 +2,7 @@ import React, { useState } from "react";
 import { cn } from "../lib/utils";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-export interface TanLine {
-    numLigne: string;
-    typeLigne: string;
-}
-
-export interface TanStop {
-    codeLieu: string;
-    libelle: string;
-    distance: string;
-    ligne: TanLine[];
-}
+import { TanStop } from "../lib/tan-service";
 
 interface BusStopsWidgetProps {
     stops?: TanStop[];
